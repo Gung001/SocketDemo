@@ -38,8 +38,10 @@ public class UDPSearcher {
         // 构建一份要发送的数据
         String requestData = MessageCreator.buildWithPort(LISTEN_PORT);
         byte[] requestDataBytes = requestData.getBytes();
+
         // 直接根据发送者构建一份回送数据
         DatagramPacket requestPacket = new DatagramPacket(requestDataBytes, requestDataBytes.length);
+
         // 端口20000，广播地址
         requestPacket.setAddress(InetAddress.getByName("255.255.255.255"));
         requestPacket.setPort(20000);
@@ -171,6 +173,7 @@ public class UDPSearcher {
         // 读取任意键盘都可以退出
         System.in.read();
 
+        // 获取设备结果&关闭资源
         List<Device> devices = listener.getDevicesAndClose();
 
         devices.forEach(e -> System.out.println(e));
